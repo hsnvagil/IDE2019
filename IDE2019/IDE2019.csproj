@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F2ECB3D-7627-43E6-9255-CB2FD43BFCA2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>IDE2019</RootNamespace>
+    <AssemblyName>IDE2019</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.24.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.24\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IOC.cs" />
+    <Compile Include="Model\CS.cs" />
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="Presenter\MainFormPresenter.cs" />
+    <Compile Include="Presenter\NewProjectPresenter.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IProjectService.cs" />
+    <Compile Include="Service\ProjectService.cs" />
+    <Compile Include="View\IMainForm.cs" />
+    <Compile Include="View\INewProjectView.cs" />
+    <Compile Include="View\IView.cs" />
+    <Compile Include="View\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewProjectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\NewProjectForm.Designer.cs">
+      <DependentUpon>NewProjectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\StartForm.Designer.cs">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="View\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\NewProjectForm.resx">
+      <DependentUpon>NewProjectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\StartForm.resx">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NewWindow_6277.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenFileDialog_692.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NewFile_6276.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open_6529.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_6530.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Saveall_6518.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cut_6523.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy_6524.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Paste_6520.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_1_-_Up_1815558.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BuildSolution_104.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_run_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CommentCode_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_2_-_Down_1815568.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_file_delete_48762.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_Close_1891023.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_Close_Icon_1398919.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_ui_ux_delete_close_remove_4631319.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Undo_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Redo_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\goto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\replace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\proj.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
