@@ -1,5 +1,5 @@
 
-<h1 align="center" >Integrated Development Environment </h1>
+<h1 align="left" >Integrated Development Environment </h1>
 <p> A small C# IDE written in Windows Forms. Create console application, compile, build, run projects and different appearances etc. </p>
 
 <div align="center">
