@@ -1,7 +1,5 @@
-﻿namespace IDE2019.Views
-{
-    public interface IView
-    {
+﻿namespace IDE2019.View {
+    public interface IView {
         bool ShowDialog();
     }
 }

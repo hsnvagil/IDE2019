@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IOC.cs" />
-    <Compile Include="Model\CS.cs" />
+    <Compile Include="Model\Cs.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Presenter\MainFormPresenter.cs" />
     <Compile Include="Presenter\NewProjectPresenter.cs" />

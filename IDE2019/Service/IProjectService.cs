@@ -1,22 +1,21 @@
-﻿using IDE2019.Models;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom.Compiler;
 using System.Windows.Forms;
+using IDE2019.Model;
 
-namespace IDE2019.Services
+namespace IDE2019.Service
 {
-    interface IProjectService
+    internal interface IProjectService
     {
         string GetPathFolder();
         void CreatingProjectFolder(Project project);
-        TabPage AddPage(CS cS);
+        TabPage AddPage(Cs cS);
         void Run(Project cS);
-        CS CreateCS();
+        Cs CreateCs();
         Project OpenProject(string path);
-        CS OpenFile(string path);
+        Cs OpenFile(string path);
         void ProjectSerialization(Project project);
-        void SaveFile(CS cS);
+        void SaveFile(Cs cS);
         CompilerResults Build(Project cS);
-        Project RemoveFile(Project project, CS cS);
-
+        Project RemoveFile(Project project, Cs cS);
     }
 }

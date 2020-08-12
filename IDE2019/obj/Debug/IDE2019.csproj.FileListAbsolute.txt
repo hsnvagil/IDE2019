@@ -48,3 +48,21 @@ D:\all\IDE2019\IDE2019\obj\Debug\IDE2019.csproj.GenerateResource.cache
 D:\all\IDE2019\IDE2019\obj\Debug\IDE2019.csproj.CopyComplete
 D:\all\IDE2019\IDE2019\obj\Debug\IDE2019.exe
 D:\all\IDE2019\IDE2019\obj\Debug\IDE2019.pdb
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.csprojAssemblyReference.cache
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.Properties.Resources.resources
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.View.MainForm.resources
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.View.NewProjectForm.resources
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.View.StartForm.resources
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.csproj.GenerateResource.cache
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.csproj.CoreCompileInputs.cache
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.exe
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.pdb
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\IDE2019.exe.config
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\IDE2019.exe
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\IDE2019.pdb
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\Autofac.dll
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\FastColoredTextBox.dll
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\Autofac.pdb
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\Autofac.xml
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\bin\Debug\FastColoredTextBox.xml
+C:\Users\Agil Hasanov\Desktop\ide-2019\IDE2019\obj\Debug\IDE2019.csproj.CopyComplete

@@ -1,82 +1,73 @@
-﻿using IDE2019.Services;
-using IDE2019.Views;
-using System;
+﻿using System;
+using IDE2019.Service;
+using IDE2019.View;
 
-namespace IDE2019.Presenters
-{
-    class MainFormPresenter
-    {
-        private IMainForm mainForm;
-        private IProjectService projectService;
-        public IView View { get { return mainForm; } }
+namespace IDE2019.Presenter {
+    internal class MainFormPresenter {
+        private readonly IMainForm _mainForm;
+        private readonly IProjectService _projectService;
+        public IView View => _mainForm;
 
-        public MainFormPresenter(IMainForm mainForm, IProjectService projectService)
-        {
-            this.mainForm = mainForm;
-            this.projectService = projectService;
-
+        public MainFormPresenter(IMainForm mainForm, IProjectService projectService) {
+            _mainForm = mainForm;
+            _projectService = projectService;
             EventSubscription();
         }
-        private void EventSubscription()
-        {
-            mainForm.NewProjectEvent += NewProjectEvent;
-            mainForm.AddPageEvent += AddPageEvent;
-            mainForm.RunEvent += RunEvent;
-            mainForm.OpenProjectEvent += OpenProjectEvent;
-            mainForm.AddCSEvent += AddCSEvent;
-            mainForm.SerializationEvent += SerealizationEvent;
-            mainForm.OpenFileEvent += OpenFileEvent;
-            mainForm.SaveFileEvent += SaveFileEvent;
-            mainForm.BuildEvent += BuildEvent;
-            mainForm.RemoveFileEvent += RemoveFileEvent;
-        }
-        private void RemoveFileEvent(object sender, RemoveFileEventArgs e)
-        {
-            var tmp = projectService.RemoveFile(e.project, e.cS);
-            projectService.ProjectSerialization(tmp);
-            mainForm.GetProject(tmp);
 
+        private void EventSubscription() {
+            _mainForm.NewProjectEvent += NewProjectEvent;
+            _mainForm.AddPageEvent += AddPageEvent;
+            _mainForm.RunEvent += RunEvent;
+            _mainForm.OpenProjectEvent += OpenProjectEvent;
+            _mainForm.AddCsEvent += AddCsEvent;
+            _mainForm.SerializationEvent += SerializationEvent;
+            _mainForm.OpenFileEvent += OpenFileEvent;
+            _mainForm.SaveFileEvent += SaveFileEvent;
+            _mainForm.BuildEvent += BuildEvent;
+            _mainForm.RemoveFileEvent += RemoveFileEvent;
         }
-        private void BuildEvent(object sender, ProjectEventArgs e)
-        {
-            mainForm.SetErrors(projectService.Build(e.project));
-        }
-        private void SaveFileEvent(object sender, ProjectEventArgs e)
-        {
-            projectService.SaveFile(e.cS);
-        }
-        private void OpenFileEvent(object sender, OpenFileEventArgs e)
-        {
-            mainForm.AddCS(projectService.OpenFile(e.path));
-        }
-        private void SerealizationEvent(object sender, SerializationEventArgs e)
-        {
-            projectService.ProjectSerialization(e.project);
-        }
-        private void OpenProjectEvent(object sender, OpenFileEventArgs e)
-        {
-            mainForm.GetProject(projectService.OpenProject(e.path));
-        }
-        private void AddCSEvent(object sender, EventArgs e)
-        {
 
-            mainForm.AddCS(projectService.CreateCS());
+        private void RemoveFileEvent(object sender, RemoveFileEventArgs e) {
+            var tmp = _projectService.RemoveFile(e.Project, e.Cs);
+            _projectService.ProjectSerialization(tmp);
+            _mainForm.GetProject(tmp);
         }
-        private void RunEvent(object sender, ProjectEventArgs e)
-        {
-            projectService.Run(e.project);
+
+        private void BuildEvent(object sender, ProjectEventArgs e) {
+            _mainForm.SetErrors(_projectService.Build(e.Project));
         }
-        private void AddPageEvent(object sender, ProjectEventArgs e)
-        {
-            mainForm.AddPage(projectService.AddPage(e.cS));
+
+        private void SaveFileEvent(object sender, ProjectEventArgs e) {
+            _projectService.SaveFile(e.Cs);
         }
-        private void NewProjectEvent(object sender, EventArgs e)
-        {
-            NewProjectPresenter newProject = IOC.Resolve<NewProjectPresenter>();
-            if (newProject.View.ShowDialog())
-            {
-                mainForm.SetProject(newProject.project);
-            }
+
+        private void OpenFileEvent(object sender, OpenFileEventArgs e) {
+            _mainForm.AddCs(_projectService.OpenFile(e.Path));
+        }
+
+        private void SerializationEvent(object sender, SerializationEventArgs e) {
+            _projectService.ProjectSerialization(e.Project);
+        }
+
+        private void OpenProjectEvent(object sender, OpenFileEventArgs e) {
+            _mainForm.GetProject(_projectService.OpenProject(e.Path));
+        }
+
+        private void AddCsEvent(object sender, EventArgs e) {
+            _mainForm.AddCs(_projectService.CreateCs());
+        }
+
+        private void RunEvent(object sender, ProjectEventArgs e) {
+            _projectService.Run(e.Project);
+        }
+
+        private void AddPageEvent(object sender, ProjectEventArgs e) {
+            _mainForm.AddPage(_projectService.AddPage(e.Cs));
+        }
+
+        private void NewProjectEvent(object sender, EventArgs e) {
+            var newProject = IOC.Resolve<NewProjectPresenter>();
+            if (newProject.View.ShowDialog()) _mainForm.SetProject(newProject.Project);
         }
     }
 }

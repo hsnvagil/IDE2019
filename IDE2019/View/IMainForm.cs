@@ -1,18 +1,15 @@
-﻿using IDE2019.Models;
-using System;
+﻿using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using IDE2019.Model;
 
-namespace IDE2019.Views
-{
-    public interface IMainForm : IView
-    {
+namespace IDE2019.View {
+    public interface IMainForm : IView {
         event EventHandler<EventArgs> NewProjectEvent;
         event EventHandler<ProjectEventArgs> AddPageEvent;
         event EventHandler<ProjectEventArgs> RunEvent;
         event EventHandler<ProjectEventArgs> BuildEvent;
-        event EventHandler<EventArgs> AddCSEvent;
+        event EventHandler<EventArgs> AddCsEvent;
         event EventHandler<OpenFileEventArgs> OpenProjectEvent;
         event EventHandler<OpenFileEventArgs> OpenFileEvent;
         event EventHandler<SerializationEventArgs> SerializationEvent;
@@ -22,25 +19,25 @@ namespace IDE2019.Views
         void AddPage(TabPage tabPage);
         void SetProject(Project project);
         void GetProject(Project project);
-        void AddCS(CS cS);
+        void AddCs(Cs cS);
         void SetErrors(CompilerResults errorCollection);
     }
-    public class ProjectEventArgs : EventArgs
-    {
-        public CS cS { get; set; }
-        public Project project { get; set; }
+
+    public class ProjectEventArgs : EventArgs {
+        public Cs Cs { get; set; }
+        public Project Project { get; set; }
     }
-    public class RemoveFileEventArgs : EventArgs
-    {
-        public Project project { get; set; } = new Project();
-        public CS cS { get; set; }
+
+    public class RemoveFileEventArgs : EventArgs {
+        public Project Project { get; set; } = new Project();
+        public Cs Cs { get; set; }
     }
-    public class OpenFileEventArgs : EventArgs
-    {
-        public string path { get; set; }
+
+    public class OpenFileEventArgs : EventArgs {
+        public string Path { get; set; }
     }
-    public class SerializationEventArgs : EventArgs
-    {
-        public Project project { get; set; } = new Project();
+
+    public class SerializationEventArgs : EventArgs {
+        public Project Project { get; set; } = new Project();
     }
 }

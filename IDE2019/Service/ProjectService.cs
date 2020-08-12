@@ -1,21 +1,19 @@
-﻿using FastColoredTextBoxNS;
-using IDE2019.Models;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
-using IDE2019.Views;
+using FastColoredTextBoxNS;
+using IDE2019.Model;
 
-namespace IDE2019.Services
-{
-    public class ProjectService : IProjectService
-    {
-        public void ProjectSerialization(Project project)
-        {
-            string xmlFile = project.Path + @"\" + project.Name + ".mysln";
+namespace IDE2019.Service {
+    public class ProjectService : IProjectService {
+        public void ProjectSerialization(Project project) {
+            var xmlFile = project.Path + @"\" + project.Name + ".mysln";
 
-            XmlTextWriter xmlWriter = new XmlTextWriter(xmlFile, null);
+            var xmlWriter = new XmlTextWriter(xmlFile, null);
 
             MessageBox.Show(xmlFile);
             xmlWriter.WriteStartDocument();
@@ -25,8 +23,7 @@ namespace IDE2019.Services
             xmlWriter.WriteAttributeString("path", project.Name + ".exe");
             xmlWriter.WriteEndElement();
 
-            foreach (var item in project.csfile)
-            {
+            foreach (var item in project.CsFile) {
                 xmlWriter.WriteStartElement("csfile");
                 xmlWriter.WriteAttributeString("path", item.Path);
                 xmlWriter.WriteAttributeString("name", item.Name);
@@ -36,140 +33,99 @@ namespace IDE2019.Services
             xmlWriter.WriteEndDocument();
             xmlWriter.Close();
         }
-        public void CreatingProjectFolder(Project project)
-        {
-            string pp = project.Path + @"\" + project.Name;
+
+        public void CreatingProjectFolder(Project project) {
+            var pp = project.Path + @"\" + project.Name;
             Directory.CreateDirectory(pp);
 
-            using (Stream fs = new FileStream(pp + @"\" + project.csfile[0].Name, FileMode.Create, FileAccess.ReadWrite))
-            {
-                using (StreamWriter sw = new StreamWriter(fs))
-                {
-                    sw.Write(project.csfile[0].Text);
+            using (Stream fs = new FileStream(pp + @"\" + project.CsFile[0].Name, FileMode.Create,
+                                              FileAccess.ReadWrite)) {
+                using (var sw = new StreamWriter(fs)) {
+                    sw.Write(project.CsFile[0].Text);
                 }
             }
         }
-        public string GetPathFolder()
-        {
-            using (FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog())
-            {
+
+        public string GetPathFolder() {
+            using (var folderBrowserDialog1 = new FolderBrowserDialog()) {
                 folderBrowserDialog1.SelectedPath = @"C:\\";
 
-                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    return folderBrowserDialog1.SelectedPath;
-                }
-                return null;
+                return folderBrowserDialog1.ShowDialog() == DialogResult.OK ? folderBrowserDialog1.SelectedPath : null;
             }
         }
-        public TabPage AddPage(CS cS)
-        {
-            TabPage tabPage = new TabPage(cS.Name);
-            FastColoredTextBox textBox = new FastColoredTextBox();
-            textBox.Dock = DockStyle.Fill;
 
-            textBox.Language = Language.CSharp;
-            textBox.Text = cS.Text;
-
+        public TabPage AddPage(Cs cS) {
+            var tabPage = new TabPage(cS.Name);
+            var textBox = new FastColoredTextBox {Dock = DockStyle.Fill, Language = Language.CSharp, Text = cS.Text};
             tabPage.Controls.Add(textBox);
-
             return tabPage;
         }
-        public void SaveFile(CS cS)
-        {
-            using (Stream fs = new FileStream(cS.Path, FileMode.Truncate, FileAccess.ReadWrite))
-            {
-                using (StreamWriter sw = new StreamWriter(fs))
-                {
+
+        public void SaveFile(Cs cS) {
+            using (Stream fs = new FileStream(cS.Path, FileMode.Truncate, FileAccess.ReadWrite)) {
+                using (var sw = new StreamWriter(fs)) {
                     sw.Write(cS.Text);
                 }
             }
         }
-        public void Run(Project cS)
-        {
-            CompilerResults results = Build(cS);
+
+        public void Run(Project cS) {
+            var results = Build(cS);
 
             if (results.Errors.Count > 0)
-            {
                 foreach (CompilerError item in results.Errors)
-                {
                     MessageBox.Show(item.ErrorText + item.Line);
-                }
-            }
             else
-            {
                 Process.Start(@"..\..\my.exe");
-            }
-
         }
-        public CompilerResults Build(Project cS)
-        {
-            CodeDomProvider code = CodeDomProvider.CreateProvider("CSharp");
-            CompilerParameters param = new CompilerParameters();
 
-            param.GenerateExecutable = true;
-            param.GenerateInMemory = false;
-            param.OutputAssembly = @"..\..\my.exe";
-            param.TreatWarningsAsErrors = false;
-
-
-            string[] fileNames = new string[cS.csfile.Count];
-            string[] fileNames2 = new string[cS.csfile.Count];
+        public CompilerResults Build(Project cS) {
+            var code = CodeDomProvider.CreateProvider("CSharp");
+            var param = new CompilerParameters {
+                GenerateExecutable = true,
+                GenerateInMemory = false,
+                OutputAssembly = @"..\..\my.exe",
+                TreatWarningsAsErrors = false
+            };
 
 
-            Project tempProj = new Project();
-            tempProj.Name = cS.Name;
-            tempProj.csfile = new System.Collections.Generic.List<CS>();
-            foreach (var item in cS.csfile)
-            {
-                tempProj.csfile.Add(item);
-            }
+            var fileNames = new string[cS.CsFile.Count];
+            var fileNames2 = new string[cS.CsFile.Count];
+
+
+            var tempProj = new Project {Name = cS.Name, CsFile = new List<Cs>()};
+            foreach (var item in cS.CsFile) tempProj.CsFile.Add(item);
 
             Directory.CreateDirectory(tempProj.Name);
 
-            foreach (var item in tempProj.csfile)
-            {
-                using (Stream fs = new FileStream(tempProj.Name + @"\" + item.Name, FileMode.Create, FileAccess.ReadWrite))
-                {
-                    using (StreamWriter sw = new StreamWriter(fs))
-                    {
+            foreach (var item in tempProj.CsFile)
+                using (Stream fs =
+                    new FileStream(tempProj.Name + @"\" + item.Name, FileMode.Create, FileAccess.ReadWrite)) {
+                    using (var sw = new StreamWriter(fs)) {
                         sw.Write(item.Text);
                     }
                 }
-            }
 
 
-            int k = 0;
-            foreach (var item in tempProj.csfile)
-            {
-                fileNames[k++] = (tempProj.Name + @"\" + item.Name);
-            }
+            var k = 0;
+            foreach (var item in tempProj.CsFile) fileNames[k++] = tempProj.Name + @"\" + item.Name;
 
-            CompilerResults results = code.CompileAssemblyFromFile(param, fileNames);
-            foreach (var item in tempProj.csfile)
-            {
-                if(File.Exists(tempProj.Name + @"\" +item.Name))
-                    File.Delete(tempProj.Name + @"\" + item.Name);
-            }
+            var results = code.CompileAssemblyFromFile(param, fileNames);
+            foreach (var item in tempProj.CsFile.Where(item => File.Exists(tempProj.Name + @"\" + item.Name)))
+                File.Delete(tempProj.Name + @"\" + item.Name);
             Directory.Delete(tempProj.Name);
             return results;
-            
         }
-        public CS CreateCS()
-        {
-            CS cS = new CS();
-            Stream fs;
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-                saveFileDialog1.Filter = "cs files (*.cs)|*.cs";
-                saveFileDialog1.FilterIndex = 1;
-                saveFileDialog1.RestoreDirectory = true;
-                saveFileDialog1.AddExtension = true;
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    if ((fs = saveFileDialog1.OpenFile()) != null)
-                    {
+
+        public Cs CreateCs() {
+            var cS = new Cs();
+            using (var openFileDialog = new OpenFileDialog()) {
+                var saveFileDialog1 = new SaveFileDialog {
+                    Filter = "cs files (*.cs)|*.cs", FilterIndex = 1, RestoreDirectory = true, AddExtension = true
+                };
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
+                    Stream fs;
+                    if ((fs = saveFileDialog1.OpenFile()) != null) {
                         cS.Path = saveFileDialog1.FileName;
                         cS.Name = Path.GetFileName(saveFileDialog1.FileName);
                         cS.Text = "using System;\n\nclass " + cS.Name.Substring(0, cS.Name.Length - 3) + "{\n\n \n}";
@@ -178,64 +134,49 @@ namespace IDE2019.Services
 
                         fs.Close();
                     }
-                }
-                else
-                {
+                } else {
                     return null;
                 }
             }
+
             return cS;
         }
-        public Project OpenProject(string path)
-        {
-            Project project = new Project();
 
-            project.Path = Path.GetDirectoryName(path);
-            string filename;
-            using (XmlReader reader = XmlReader.Create(path))
-            {
+        public Project OpenProject(string path) {
+            var project = new Project {Path = Path.GetDirectoryName(path)};
+
+            using (var reader = XmlReader.Create(path)) {
                 while (reader.Read())
-                {
-                    if (reader.IsStartElement())
-                    {
-                        filename = reader.Name.ToString();
-                        switch (filename)
-                        {
+                    if (reader.IsStartElement()) {
+                        var filename = reader.Name;
+                        switch (filename) {
                             case "project":
                                 project.Name = reader.GetAttribute("name");
                                 break;
                             case "csfile":
-                                CS cS = new CS() { Name = reader.GetAttribute("name"), Path = reader.GetAttribute("path") };
-                                project.csfile.Add(cS);
+                                var cS = new Cs
+                                    {Name = reader.GetAttribute("name"), Path = reader.GetAttribute("path")};
+                                project.CsFile.Add(cS);
                                 break;
                         }
                     }
-                }
             }
 
-            foreach (CS item in project.csfile)
-            {
-                using (Stream fs = new FileStream(item.Path, FileMode.Open, FileAccess.ReadWrite))
-                {
-                    using (StreamReader sr = new StreamReader(fs))
-                    {
+            foreach (var item in project.CsFile)
+                using (Stream fs = new FileStream(item.Path, FileMode.Open, FileAccess.ReadWrite)) {
+                    using (var sr = new StreamReader(fs)) {
                         item.Text = sr.ReadToEnd();
                     }
-
                 }
-            }
 
 
             return project;
-
         }
-        public CS OpenFile(string path)
-        {
-            CS cS = new CS();
-            using (Stream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite))
-            {
-                using (StreamReader sr = new StreamReader(fs))
-                {
+
+        public Cs OpenFile(string path) {
+            var cS = new Cs();
+            using (Stream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite)) {
+                using (var sr = new StreamReader(fs)) {
                     cS.Name = Path.GetFileName(path);
                     cS.Path = path;
                     cS.Text = sr.ReadToEnd();
@@ -243,11 +184,11 @@ namespace IDE2019.Services
                 }
             }
         }
-        public Project RemoveFile(Project project, CS cS)
-        {
-            project.csfile.Remove(cS);
+
+        public Project RemoveFile(Project project, Cs cS) {
+            project.CsFile.Remove(cS);
             File.Delete(cS.Path);
             return project;
-        }      
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace IDE2019.Views
+﻿namespace IDE2019.View
 {
     partial class MainForm
     {

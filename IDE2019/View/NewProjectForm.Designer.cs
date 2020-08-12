@@ -1,4 +1,4 @@
-﻿namespace IDE2019.Views
+﻿namespace IDE2019.View
 {
     partial class NewProjectForm
     {
@@ -74,7 +74,6 @@
             this.groupBoxNewProject.TabIndex = 3;
             this.groupBoxNewProject.TabStop = false;
             this.groupBoxNewProject.Text = "New Project";
-            this.groupBoxNewProject.Enter += new System.EventHandler(this.groupBoxNewProject_Enter);
             // 
             // buttonFolder
             // 

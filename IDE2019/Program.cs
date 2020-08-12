@@ -1,8 +1,8 @@
-﻿using IDE2019.Presenters;
-using IDE2019.Services;
-using IDE2019.Views;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using IDE2019.Presenter;
+using IDE2019.Service;
+using IDE2019.View;
 
 namespace IDE2019
 {
@@ -23,7 +23,7 @@ namespace IDE2019
             IOC.Register<NewProjectPresenter>();
             IOC.Build();
 
-            MainFormPresenter mainForm = IOC.Resolve<MainFormPresenter>();
+            var mainForm = IOC.Resolve<MainFormPresenter>();
             Application.Run((Form)mainForm.View);
         }
     }
